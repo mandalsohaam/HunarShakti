@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HunarShakti - Rural Women Skill & Income Generation Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js for AI Matchmaking & Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saffron: {
+                            50: '#fff8f1',
+                            100: '#feeed5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        indigo: {
+                            900: '#1e1b4b',
+                            950: '#0f172a',
+                        },
+                        emerald: {
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        terracotta: '#d97706',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Rozha One', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .voice-pulse {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(234, 88, 12, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+        }
+        .scan-line {
+            animation: scan 2.2s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0.8; }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 bg-amber-50/30">
+
+    <!-- TECHFEST 2026 DEMO WALKTHROUGH HELPER (Can be toggled) -->
+    <div id="demoHelperBar" class="bg-indigo-950 text-white text-xs px-3 py-2 flex flex-wrap items-center justify-between shadow-lg z-50 border-b border-indigo-800">
+        <div class="flex items-center gap-2 font-medium">
+            <span class="bg-saffron-600 text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider text-[10px] animate-pulse">TechFEST 2026 Demo Mode</span>
+            <span class="hidden sm:inline text-slate-300">Quick Walkthrough Script for 30s Recording:</span>
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto py-1">
+            <button onclick="runDemoStep(1)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-microphone text-saffron-400"></i> 1. Voice Onboard
+            </button>
+            <button onclick="runDemoStep(2)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-camera text-emerald-400"></i> 2. AI Skill Scan
+            </button>
+            <button onclick="runDemoStep(3)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i> 3. Accept Micro-Gig
+            </button>
+            <button onclick="runDemoStep(4)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-building-columns text-blue-400"></i> 4. Enterprise Bulk Order
+            </button>
+            <button onclick="runDemoStep(5)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-network-wired text-purple-400"></i> 5. AI Vector Match
+            </button>
+            <button onclick="runDemoStep(6)" class="bg-indigo-800 hover:bg-saffron-600 px-2.5 py-1 rounded text-white transition flex items-center gap-1 whitespace-nowrap text-xs">
+                <i class="fa-solid fa-fingerprint text-emerald-400"></i> 6. AEPS Payout
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION HEADER -->
+    <header class="bg-white border-b border-amber-100 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <!-- Brand Logo & Tagline -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-saffron-500 to-terracotta flex items-center justify-center text-white text-xl sm:text-2xl shadow-md shadow-saffron-500/20">
+                        <i class="fa-solid fa-hands-holding-circle"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-xl sm:text-2xl font-bold font-serif tracking-tight text-indigo-950">हुनरShakti</h1>
+                            <span class="bg-amber-100 text-saffron-700 text-xs px-2 py-0.5 rounded-full font-bold">Bharat AI</span>
+                        </div>
+                        <p class="text-[11px] sm:text-xs text-slate-500 hidden sm:block">Empowering Rural Women Artisans with Voice & AI Micro-Economy</p>
+                    </div>
+                </div>
+
+                <!-- Role Switcher & Audio Voice Assistant Button -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <!-- Global Voice Assistance Trigger -->
+                    <button onclick="triggerGlobalVoiceHelp()" class="flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-saffron-700 font-semibold px-3 py-1.5 rounded-xl text-xs sm:text-sm transition">
+                        <i class="fa-solid fa-volume-high text-saffron-600 animate-bounce"></i>
+                        <span class="hidden md:inline">Voice Help</span>
+                    </button>
+
+                    <!-- Dual Role Switch Container -->
+                    <div class="bg-slate-100 p-1 rounded-2xl border border-slate-200 flex items-center">
+                        <button id="roleBtnArtisan" onclick="switchRole('artisan')" class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 bg-saffron-600 text-white shadow">
+                            <i class="fa-solid fa-person-dress text-base"></i>
+                            <span>Artisan / SHG</span>
+                        </button>
+                        <button id="roleBtnBuyer" onclick="switchRole('buyer')" class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-indigo-950">
+                            <i class="fa-solid fa-store text-base"></i>
+                            <span>Buyer / Enterprise</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+        <!-- ========================================================================= -->
+        <!-- VIEW 1: RURAL ARTISAN / WOMAN VIEW (Voice-First, Visual, Low-Literacy) -->
+        <!-- ========================================================================= -->
+        <div id="artisanView" class="space-y-6">
+
+            <!-- Artisan Top Greeting & Language Switcher -->
+            <div class="bg-gradient-to-r from-saffron-500 via-amber-600 to-terracotta rounded-3xl p-5 sm:p-7 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <img id="artisanAvatar" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=200" alt="Artisan Profile" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-4 border-white/30 shadow">
+                            <span class="absolute -bottom-1 -right-1 bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded-full font-bold border-2 border-white flex items-center gap-1">
+                                <i class="fa-solid fa-check"></i> Verified
+                            </span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl sm:text-2xl font-bold font-serif" id="artisanNameGreeting">नमस्ते, Sunita Devi!</h2>
+                                <button onclick="speakText('नमस्ते सुनीता देवी! हुनर शक्ति में आपका स्वागत है। आपके गाँव पटियाला में आज ३ नये आर्डर उपलब्ध हैं।')" class="bg-white/20 hover:bg-white/30 p-2 rounded-full text-white text-sm" title="Listen Greeting">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                            <p class="text-amber-100 text-xs sm:text-sm flex items-center gap-2 mt-1">
+                                <span><i class="fa-solid fa-location-dot"></i> Sangrur, Punjab</span>
+                                <span>•</span>
+                                <span>Self Help Group: <strong>Guru Nanak SHG</strong></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Voice Language Selector -->
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-2.5 rounded-2xl flex flex-col gap-1 sm:w-64">
+                        <label class="text-[11px] font-semibold text-amber-100 uppercase tracking-wider flex items-center justify-between">
+                            <span><i class="fa-solid fa-language"></i> Audio Language</span>
+                            <span class="text-xs bg-saffron-700 px-1.5 rounded">bilingual</span>
+                        </label>
+                        <select id="artisanLangSelect" onchange="changeArtisanLanguage(this.value)" class="bg-white text-slate-800 text-sm font-bold rounded-xl px-3 py-1.5 outline-none shadow-sm cursor-pointer">
+                            <option value="hi-IN" selected>हिंदी (Hindi)</option>
+                            <option value="pa-IN">ਪੰਜਾਬੀ (Punjabi)</option>
+                            <option value="bn-IN">বাংলা (Bengali)</option>
+                            <option value="mr-IN">मराठी (Marathi)</option>
+                            <option value="ta-IN">தமிழ் (Tamil)</option>
+                            <option value="en-IN">English (India)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Cards (Voice-First Large Visual Buttons) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <!-- Voice Skill Onboarding Button -->
+                <button onclick="openModal('voiceOnboardModal')" class="bg-white hover:border-saffron-500 border-2 border-transparent p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center group">
+                    <div class="w-14 h-14 rounded-2xl bg-saffron-100 text-saffron-600 flex items-center justify-center text-2xl group-hover:scale-110 transition mb-2">
+                        <i class="fa-solid fa-microphone-lines"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-sm sm:text-base">बोलकर हुनर बताएं</span>
+                    <span class="text-xs text-slate-500 mt-0.5">Voice Skill Registration</span>
+                </button>
+
+                <!-- AI Handicraft Scanner -->
+                <button onclick="openModal('aiScanModal')" class="bg-white hover:border-emerald-500 border-2 border-transparent p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition mb-2">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-sm sm:text-base">फोटो AI जाँच</span>
+                    <span class="text-xs text-slate-500 mt-0.5">Craft Quality & Pricing</span>
+                </button>
+
+                <!-- Micro-Gigs Feed Trigger -->
+                <button onclick="scrollToGigs()" class="bg-white hover:border-amber-500 border-2 border-transparent p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition mb-2">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-sm sm:text-base">काम और ऑर्डर</span>
+                    <span class="text-xs text-slate-500 mt-0.5">Available Micro-Gigs</span>
+                </button>
+
+                <!-- AEPS Wallet Trigger -->
+                <button onclick="openModal('aepsWalletModal')" class="bg-white hover:border-indigo-500 border-2 border-transparent p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl group-hover:scale-110 transition mb-2">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-sm sm:text-base">आधार वॉलेट (₹)</span>
+                    <span class="text-xs text-slate-500 mt-0.5">AEPS Cash-out</span>
+                </button>
+            </div>
+
+            <!-- Active Skills Badge Bar & AI Recommendation -->
+            <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-saffron-50 text-saffron-600 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">My Tagged Skills (AI Detected)</div>
+                        <div id="artisanSkillBadges" class="flex flex-wrap gap-2 mt-1">
+                            <span class="bg-saffron-100 text-saffron-800 font-semibold px-2.5 py-1 rounded-lg text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-scissors"></i> Phulkari Embroidery
+                            </span>
+                            <span class="bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-1 rounded-lg text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-seedling"></i> Organic Papad & Pickles
+                            </span>
+                            <span class="bg-purple-100 text-purple-800 font-semibold px-2.5 py-1 rounded-lg text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-shirt"></i> Kantha Stitching
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200/60 w-full md:w-auto justify-between md:justify-start">
+                    <div class="text-xs">
+                        <div class="text-slate-500">Quality Score</div>
+                        <div class="text-emerald-600 font-bold text-base flex items-center gap-1">
+                            <i class="fa-solid fa-shield-halved"></i> 94% (Grade A)
+                        </div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <div class="text-xs">
+                        <div class="text-slate-500">Credit Limit</div>
+                        <div class="text-indigo-900 font-bold text-base">₹15,000 Loan Ready</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Micro-Gigs Feed & Active Tasks Section -->
+            <div id="gigsSection" class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-indigo-950 font-serif flex items-center gap-2">
+                            <span>आपके लिए नए काम (Micro-Gigs)</span>
+                            <span class="bg-saffron-100 text-saffron-700 text-xs px-2 py-0.5 rounded-full font-bold">3 Nearby</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Listen with audio buttons and click Accept to start working</p>
+                    </div>
+                    <button onclick="speakText('यहाँ आपके नज़दीकी ३ काम दिखाए गए हैं। फुल्कारी दुपट्टा, आर्गेनिक पापड़ और जूट बैग।')" class="text-xs bg-saffron-50 text-saffron-700 font-bold px-3 py-1.5 rounded-xl flex items-center gap-1 hover:bg-saffron-100">
+                        <i class="fa-solid fa-volume-high"></i> Listen All
+                    </button>
+                </div>
+
+                <!-- Gigs Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="gigsGrid">
+                    <!-- Gig Card 1 -->
+                    <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-xl flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> 96% Match
+                                </span>
+                                <button onclick="speakText('फुल्कारी दुप्पटे की कढ़ाई। 20 पीस तैयार करें। कमाई 3500 रुपये। दूरी 4 किलोमीटर।')" class="w-9 h-9 rounded-full bg-saffron-100 text-saffron-600 hover:bg-saffron-600 hover:text-white transition flex items-center justify-center text-sm" title="Listen in Hindi">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mt-3">20 Handwoven Phulkari Dupattas</h4>
+                            <p class="text-xs text-slate-500 mt-1">Crafting festive silk thread embroidery on chiffon cloth provided by SHG hub.</p>
+
+                            <div class="mt-4 space-y-2 text-xs">
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-location-dot text-saffron-500"></i> Location:</span>
+                                    <span class="font-bold">Patiala Cluster (4 km)</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-clock text-amber-500"></i> Delivery Time:</span>
+                                    <span class="font-bold">5 Days</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-boxes-packing text-indigo-500"></i> Raw Material:</span>
+                                    <span class="text-emerald-600 font-bold">Doorstep Delivery Included</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <div class="text-[11px] text-slate-400 font-medium">Payout</div>
+                                <div class="text-xl font-black text-saffron-600">₹3,500</div>
+                            </div>
+                            <button onclick="acceptGig(this, '20 Handwoven Phulkari Dupattas', 3500)" class="bg-saffron-600 hover:bg-saffron-700 text-white text-sm font-bold px-5 py-2.5 rounded-2xl transition shadow hover:shadow-md">
+                                Accept Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Gig Card 2 -->
+                    <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-xl flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> 92% Match
+                                </span>
+                                <button onclick="speakText('ऑर्गेनिक मेथी पापड़ की पैकेजिंग। 50 किलोग्राम बंडल। कमाई 1800 रुपये। दूरी 2 किलोमीटर।')" class="w-9 h-9 rounded-full bg-saffron-100 text-saffron-600 hover:bg-saffron-600 hover:text-white transition flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mt-3">50kg Organic Papad Batch</h4>
+                            <p class="text-xs text-slate-500 mt-1">Hygienic rolling, sun-drying, and eco-pouch sealing for local organic brand.</p>
+
+                            <div class="mt-4 space-y-2 text-xs">
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-location-dot text-saffron-500"></i> Location:</span>
+                                    <span class="font-bold">Sangrur Center (2 km)</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-clock text-amber-500"></i> Delivery Time:</span>
+                                    <span class="font-bold">2 Days</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-shield-cat text-purple-500"></i> FSSAI Quality Audit:</span>
+                                    <span class="text-emerald-600 font-bold">Passed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <div class="text-[11px] text-slate-400 font-medium">Payout</div>
+                                <div class="text-xl font-black text-saffron-600">₹1,800</div>
+                            </div>
+                            <button onclick="acceptGig(this, '50kg Organic Papad Batch', 1800)" class="bg-saffron-600 hover:bg-saffron-700 text-white text-sm font-bold px-5 py-2.5 rounded-2xl transition shadow hover:shadow-md">
+                                Accept Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Gig Card 3 -->
+                    <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-start justify-between">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-xl flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> 88% Match
+                                </span>
+                                <button onclick="speakText('जूट के 30 कॉरपोरेट थैले। सिलाई और हैंडल। कमाई 2400 रुपये।')" class="w-9 h-9 rounded-full bg-saffron-100 text-saffron-600 hover:bg-saffron-600 hover:text-white transition flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg mt-3">30 Handstitched Jute Bags</h4>
+                            <p class="text-xs text-slate-500 mt-1">Stitching eco-friendly jute shopping bags with cane handles for TechFEST corporate kit.</p>
+
+                            <div class="mt-4 space-y-2 text-xs">
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-location-dot text-saffron-500"></i> Location:</span>
+                                    <span class="font-bold">Ludhiana Hub (8 km)</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-clock text-amber-500"></i> Delivery Time:</span>
+                                    <span class="font-bold">3 Days</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span><i class="fa-solid fa-truck text-indigo-500"></i> Pickup:</span>
+                                    <span class="text-slate-800 font-bold">Local Courier Partner</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <div class="text-[11px] text-slate-400 font-medium">Payout</div>
+                                <div class="text-xl font-black text-saffron-600">₹2,400</div>
+                            </div>
+                            <button onclick="acceptGig(this, '30 Handstitched Jute Bags', 2400)" class="bg-saffron-600 hover:bg-saffron-700 text-white text-sm font-bold px-5 py-2.5 rounded-2xl transition shadow hover:shadow-md">
+                                Accept Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artisan Earnings Summary Tracker -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl p-6 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-saffron-500/20 text-saffron-400 border border-saffron-500/40 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">This Month's Skill Earnings</div>
+                        <div class="text-3xl font-extrabold text-white mt-0.5">₹12,850 <span class="text-xs text-emerald-400 font-normal"><i class="fa-solid fa-arrow-up"></i> +28% vs last month</span></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <button onclick="openModal('aepsWalletModal')" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-3 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow">
+                        <i class="fa-solid fa-fingerprint"></i> Withdraw via AEPS Aadhaar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- VIEW 2: BUYER / ENTERPRISE / SHG ADMIN VIEW -->
+        <!-- ========================================================================= -->
+        <div id="buyerView" class="space-y-6 hidden">
+
+            <!-- Enterprise Header Overview Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Active Verified Artisans</div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-indigo-950 mt-1">1,480+</div>
+                    <div class="text-[11px] text-emerald-600 font-semibold mt-1"><i class="fa-solid fa-check-double"></i> 12 SHG Clusters</div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Escrow Protected</div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-saffron-600 mt-1">₹4,25,000</div>
+                    <div class="text-[11px] text-slate-500 font-semibold mt-1">100% Guaranteed Payouts</div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Avg AI Quality Rating</div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">94.8%</div>
+                    <div class="text-[11px] text-slate-500 font-semibold mt-1">Computer Vision Audited</div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Avg Delivery Time</div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-blue-600 mt-1">4.2 Days</div>
+                    <div class="text-[11px] text-slate-500 font-semibold mt-1">Hyperlocal Fulfillment</div>
+                </div>
+            </div>
+
+            <!-- Bulk Sourcing Request Form & Live AI Matchmaker -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Bulk Requirement Poster Form (5 cols) -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-900 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-cart-flatbed"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-indigo-950 text-base">Post Bulk Sourcing Requirement</h3>
+                            <p class="text-xs text-slate-500">AI will automatically match top local SHGs</p>
+                        </div>
+                    </div>
+
+                    <form id="bulkSourcingForm" onsubmit="handleBulkOrderSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Product Requirement Title</label>
+                            <input type="text" id="orderTitle" required placeholder="e.g. 500 Handwoven Silk Dupattas for Festive Season" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-indigo-600">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Craft Category</label>
+                                <select id="orderCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600 font-medium">
+                                    <option value="embroidery">Phulkari Embroidery</option>
+                                    <option value="weaving">Jute & Handloom Weaving</option>
+                                    <option value="food">Organic Papad & Spices</option>
+                                    <option value="pottery">Terracotta Pottery</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Quantity (Units)</label>
+                                <input type="number" id="orderQty" required placeholder="500" value="500" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Total Budget (₹)</label>
+                                <input type="number" id="orderBudget" required placeholder="75000" value="75000" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600 font-bold text-saffron-600">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Delivery Deadline</label>
+                                <input type="date" id="orderDeadline" required value="2026-11-15" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Target Cluster Region</label>
+                            <select id="orderRegion" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600">
+                                <option value="punjab">Patiala & Sangrur, Punjab</option>
+                                <option value="wb">Birbhum & Nadia, West Bengal</option>
+                                <option value="mh">Solapur & Kolhapur, Maharashtra</option>
+                                <option value="tn">Madurai & Thanjavur, Tamil Nadu</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-950 hover:bg-indigo-900 text-white font-bold py-3 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow">
+                            <i class="fa-solid fa-microchip text-saffron-400"></i> Run AI Matchmaking Engine
+                        </button>
+                    </form>
+                </div>
+
+                <!-- AI Vector Matchmaking Results (7 cols) -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+                                <h3 class="font-bold text-indigo-950 text-base">AI Vector Matchmaker Engine</h3>
+                            </div>
+                            <span class="text-xs bg-indigo-50 text-indigo-900 px-2.5 py-1 rounded-xl font-bold">Cosine Similarity Model v3.2</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">Recommended SHG Clusters based on capacity, proximity, stitch density & historical quality</p>
+                    </div>
+
+                    <!-- Recommended SHG Clusters Cards -->
+                    <div class="space-y-3" id="matchmakerResults">
+                        <!-- Result 1 -->
+                        <div class="bg-amber-50/50 border-2 border-saffron-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-saffron-500 text-white font-black flex items-center justify-center text-lg shadow">
+                                    98%
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                        Guru Nanak Women SHG Cooperative
+                                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-md font-bold">Top Match</span>
+                                    </div>
+                                    <div class="text-xs text-slate-500 mt-0.5 flex items-center gap-3">
+                                        <span><i class="fa-solid fa-users text-saffron-600"></i> 42 Artisans</span>
+                                        <span><i class="fa-solid fa-location-dot text-amber-600"></i> Sangrur, Punjab</span>
+                                        <span><i class="fa-solid fa-boxes-stacked text-indigo-600"></i> Cap: 800 units/wk</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="allocateEscrowOrder('Guru Nanak Women SHG Cooperative', 75000)" class="w-full sm:w-auto bg-saffron-600 hover:bg-saffron-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow">
+                                Assign & Fund Escrow
+                            </button>
+                        </div>
+
+                        <!-- Result 2 -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 text-white font-bold flex items-center justify-center text-base">
+                                    91%
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-900 text-sm">
+                                        Phulkari Craft Collective Patiala
+                                    </div>
+                                    <div class="text-xs text-slate-500 mt-0.5 flex items-center gap-3">
+                                        <span><i class="fa-solid fa-users text-saffron-600"></i> 28 Artisans</span>
+                                        <span><i class="fa-solid fa-location-dot text-amber-600"></i> Patiala, Punjab</span>
+                                        <span><i class="fa-solid fa-boxes-stacked text-indigo-600"></i> Cap: 450 units/wk</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="allocateEscrowOrder('Phulkari Craft Collective Patiala', 75000)" class="w-full sm:w-auto bg-indigo-950 hover:bg-indigo-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition">
+                                Assign & Fund Escrow
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Scoring Factor Radar Chart Canvas -->
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">AI Skill Vector Factor Breakdown</div>
+                        <div class="h-40 w-full flex justify-center">
+                            <canvas id="matchChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escrow & Order Tracking Pipeline -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="font-bold text-indigo-950 text-lg font-serif">Smart Escrow & Order Pipeline</h3>
+                        <p class="text-xs text-slate-500">Milestone-based automated Aadhaar wallet release</p>
+                    </div>
+                    <span id="pipelineStatusBadge" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-xl">
+                        Order #HS-8821 Active
+                    </span>
+                </div>
+
+                <!-- Interactive Pipeline Stepper -->
+                <div class="relative flex flex-col md:flex-row justify-between items-center gap-4 py-4 px-2">
+                    <!-- Progress bar behind -->
+                    <div class="hidden md:block absolute top-1/2 left-8 right-8 h-1 bg-slate-200 -translate-y-1/2 z-0"></div>
+                    <div id="pipelineProgressLine" class="hidden md:block absolute top-1/2 left-8 h-1 bg-emerald-500 -translate-y-1/2 z-0 transition-all duration-500" style="width: 50%;"></div>
+
+                    <!-- Step 1 -->
+                    <div class="relative z-10 flex md:flex-col items-center gap-3 md:text-center w-full md:w-auto bg-white p-2 rounded-2xl md:p-0">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs">Order Placed</div>
+                            <div class="text-[10px] text-slate-500">₹75,000 Escrow Locked</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 flex md:flex-col items-center gap-3 md:text-center w-full md:w-auto bg-white p-2 rounded-2xl md:p-0">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs">Raw Material Sent</div>
+                            <div class="text-[10px] text-slate-500">Silk Thread & Fabric Delivered</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 flex md:flex-col items-center gap-3 md:text-center w-full md:w-auto bg-white p-2 rounded-2xl md:p-0">
+                        <div class="w-10 h-10 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-sm ring-4 ring-amber-100 animate-pulse">
+                            <i class="fa-solid fa-spinner animate-spin"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs">Crafting In-Progress</div>
+                            <div class="text-[10px] text-slate-500">42 Artisans Active</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 flex md:flex-col items-center gap-3 md:text-center w-full md:w-auto bg-white p-2 rounded-2xl md:p-0 opacity-60">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-sm">
+                            4
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs">AI Quality Verified</div>
+                            <div class="text-[10px] text-slate-500">Stitch Density Audit</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="relative z-10 flex md:flex-col items-center gap-3 md:text-center w-full md:w-auto bg-white p-2 rounded-2xl md:p-0 opacity-60">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-sm">
+                            5
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs">AEPS Escrow Released</div>
+                            <div class="text-[10px] text-slate-500">Direct Aadhaar Payout</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button onclick="advancePipelineStep()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2">
+                        <i class="fa-solid fa-forward"></i> Simulate Next Step in Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-indigo-950 text-slate-400 py-6 text-center text-xs border-t border-indigo-900 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="font-serif text-white font-bold text-base">हुनरShakti</span>
+                <span>• TechFEST 2026 Innovation Flagship</span>
+            </div>
+            <div>
+                <span>Powered by Web Speech API, AI Vision & Aadhaar AEPS Stack</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- MODALS SECTION (VOICE ONBOARDING, AI SCANNER, AEPS WALLET) -->
+    <!-- ========================================================================= -->
+
+    <!-- MODAL 1: MULTILINGUAL VOICE ONBOARDING -->
+    <div id="voiceOnboardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 space-y-5 relative">
+            <button onclick="closeModal('voiceOnboardModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 rounded-3xl bg-saffron-100 text-saffron-600 mx-auto flex items-center justify-center text-3xl">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                </div>
+                <h3 class="text-xl font-bold text-indigo-950 font-serif">आवाज से हुनर दर्ज करें</h3>
+                <p class="text-xs text-slate-500">अपनी आवाज में बताएं कि आप क्या बनाना जानती हैं। AI अपने आप हुनर पहचान लेगा।</p>
+            </div>
+
+            <!-- Big Voice Recording Trigger -->
+            <div class="flex flex-col items-center justify-center py-4 space-y-3">
+                <button id="micRecordBtn" onclick="toggleSpeechRecognition()" class="w-24 h-24 rounded-full bg-saffron-600 text-white flex flex-col items-center justify-center text-3xl shadow-xl hover:bg-saffron-700 transition voice-pulse cursor-pointer">
+                    <i class="fa-solid fa-microphone" id="micIcon"></i>
+                </button>
+                <div id="recordingStatusText" class="text-xs font-bold text-saffron-700 uppercase tracking-wider">
+                    Click Mic & Speak Now
+                </div>
+            </div>
+
+            <!-- Preset Voice Audio Audio Chips (For Fast Hackathon Testing) -->
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Or Select Preset Voice Input Sample:</label>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="simulateVoiceInput('Mujhe Phulkari silai, gota patti aur dupatta kadhai ka 8 saal ka anubhav hai.')" class="bg-amber-50 hover:bg-amber-100 text-slate-800 text-xs px-3 py-1.5 rounded-xl border border-amber-200 text-left font-medium">
+                        <i class="fa-solid fa-volume-high text-saffron-600"></i> "मुझे फुल्कारी सिलाई और कढ़ाई आती है" (Hindi)
+                    </button>
+                    <button onclick="simulateVoiceInput('Mainu Phulkari te Papad packing da kam bhot changi tarah aunda hai.')" class="bg-amber-50 hover:bg-amber-100 text-slate-800 text-xs px-3 py-1.5 rounded-xl border border-amber-200 text-left font-medium">
+                        <i class="fa-solid fa-volume-high text-saffron-600"></i> "ਮੈਨੂੰ ਫੁਲਕਾਰੀ ਤੇ ਪਾਪੜ ਪੈਕਿੰਗ ਆਉਂਦੀ ਹੈ" (Punjabi)
+                    </button>
+                    <button onclick="simulateVoiceInput('Ami Kantha stitch ebong Jute bag toiri korte pari.')" class="bg-amber-50 hover:bg-amber-100 text-slate-800 text-xs px-3 py-1.5 rounded-xl border border-amber-200 text-left font-medium">
+                        <i class="fa-solid fa-volume-high text-saffron-600"></i> "আমি কাঁথা স্টিচ ও পাটের ব্যাগ বানাই" (Bengali)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Transcript Output Container -->
+            <div id="transcriptBox" class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs text-slate-700 min-h-[60px]">
+                <span class="text-slate-400 italic">Transcribed voice audio will appear here...</span>
+            </div>
+
+            <button onclick="saveVoiceProfile()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition text-sm shadow">
+                Save & Update Profile Skills
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: AI HANDICRAFT SCANNER & QUALITY PRICER -->
+    <div id="aiScanModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-100 space-y-5 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('aiScanModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-camera-retro"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-indigo-950 font-serif">AI Handicraft Quality & Pricing Scanner</h3>
+                    <p class="text-xs text-slate-500">Computer Vision stitch density, fabric purity & market price estimator</p>
+                </div>
+            </div>
+
+            <!-- Preset Craft Photos Selector -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Select Craft Sample Photo to Scan:</label>
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="selectScanSample('phulkari')" class="border-2 border-saffron-500 rounded-2xl overflow-hidden focus:ring-2 focus:ring-saffron-500 group relative">
+                        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&q=80&w=300" class="w-full h-16 object-cover" alt="Phulkari">
+                        <span class="absolute inset-x-0 bottom-0 bg-black/60 text-white text-[9px] font-bold py-0.5 text-center">Phulkari</span>
+                    </button>
+                    <button onclick="selectScanSample('jute')" class="border-2 border-transparent hover:border-saffron-500 rounded-2xl overflow-hidden focus:ring-2 focus:ring-saffron-500 group relative">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=300" class="w-full h-16 object-cover" alt="Jute Bag">
+                        <span class="absolute inset-x-0 bottom-0 bg-black/60 text-white text-[9px] font-bold py-0.5 text-center">Jute Bag</span>
+                    </button>
+                    <button onclick="selectScanSample('pottery')" class="border-2 border-transparent hover:border-saffron-500 rounded-2xl overflow-hidden focus:ring-2 focus:ring-saffron-500 group relative">
+                        <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=300" class="w-full h-16 object-cover" alt="Pottery">
+                        <span class="absolute inset-x-0 bottom-0 bg-black/60 text-white text-[9px] font-bold py-0.5 text-center">Pottery</span>
+                    </button>
+                    <label class="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl flex flex-col items-center justify-center text-slate-500 cursor-pointer p-1">
+                        <i class="fa-solid fa-upload text-sm"></i>
+                        <span class="text-[9px] font-bold mt-0.5">Upload Custom</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Image Viewport with Scanning Laser Line Effect -->
+            <div class="relative rounded-2xl overflow-hidden border-2 border-slate-200 bg-slate-900 h-52 flex items-center justify-center">
+                <img id="scanPreviewImg" src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
+                <div id="scanLaserLine" class="hidden absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-lg shadow-emerald-500/50 scan-line"></div>
+                
+                <!-- Bounding Box Overlays (simulated detection) -->
+                <div id="scanBoundingBox" class="hidden absolute top-1/4 left-1/4 w-1/2 h-1/2 border-2 border-dashed border-emerald-400 bg-emerald-500/10 rounded-lg flex items-start p-1">
+                    <span class="bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">Stitch Pattern 98.2%</span>
+                </div>
+            </div>
+
+            <!-- AI Scan Analysis Results Display -->
+            <div id="scanResultsContainer" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-500 uppercase">AI Quality Audit Result</span>
+                    <span id="scanGradeBadge" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                        Grade A+ (96% Score)
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                        <div class="text-slate-400">Detected Skill Craft</div>
+                        <div id="scanDetectedCraft" class="font-bold text-slate-800 mt-0.5">Phulkari Silk Embroidery</div>
+                    </div>
+                    <div class="bg-white p-2.5 rounded-xl border border-slate-100">
+                        <div class="text-slate-400">Estimated Market Price</div>
+                        <div id="scanPriceRange" class="font-bold text-saffron-600 mt-0.5">₹1,250 - ₹1,800</div>
+                    </div>
+                </div>
+
+                <div class="text-[11px] text-slate-500">
+                    <i class="fa-solid fa-circle-info text-emerald-600"></i> AI Verification Passed: Uniform stitch density, zero thread loose defects detected. Eligible for Premium Enterprise Sourcing catalog.
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="triggerAIScanAnimation()" class="flex-1 bg-indigo-950 hover:bg-indigo-900 text-white font-bold py-3 rounded-2xl transition text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrows-rotate"></i> Re-Scan Image
+                </button>
+                <button onclick="listProductOnMarketplace()" class="flex-1 bg-saffron-600 hover:bg-saffron-700 text-white font-bold py-3 rounded-2xl transition text-sm shadow">
+                    List Product on Marketplace
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: AEPS AADHAAR WALLET & CASHOUT SIMULATION -->
+    <div id="aepsWalletModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-5 relative">
+            <button onclick="closeModal('aepsWalletModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-900 mx-auto flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-fingerprint"></i>
+                </div>
+                <h3 class="text-lg font-bold text-indigo-950 font-serif">AEPS Aadhaar Direct Payout</h3>
+                <p class="text-xs text-slate-500">Instant Cash Withdrawal & Micro-Credit Portal</p>
+            </div>
+
+            <!-- Wallet Balance Card -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-5 rounded-2xl space-y-3">
+                <div class="flex justify-between items-center text-xs text-slate-300">
+                    <span>Aadhaar AEPS Wallet ID</span>
+                    <span class="font-mono">XXXX-XXXX-8921</span>
+                </div>
+                <div>
+                    <div class="text-xs text-saffron-400 font-bold uppercase">Available Balance</div>
+                    <div id="walletBalanceText" class="text-3xl font-black text-white mt-0.5">₹3,500.00</div>
+                </div>
+                <div class="pt-2 border-t border-indigo-800 flex justify-between items-center text-xs">
+                    <span class="text-emerald-400 font-medium"><i class="fa-solid fa-circle-check"></i> SHG Credit Score: 780 (High)</span>
+                </div>
+            </div>
+
+            <!-- Aadhaar Biometric Scan Trigger -->
+            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
+                <label class="block text-xs font-bold text-slate-700">Withdraw Amount (₹)</label>
+                <input type="number" id="withdrawAmount" value="2000" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900">
+
+                <button id="biometricBtn" onclick="simulateBiometricWithdrawal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow">
+                    <i class="fa-solid fa-fingerprint text-lg"></i> Authenticate Biometric & Cash Out
+                </button>
+            </div>
+
+            <!-- Micro-Credit Loan Offer Badge -->
+            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-hand text-indigo-700 text-lg"></i>
+                    <div>
+                        <div class="text-xs font-bold text-indigo-950">Mudra SHG Micro-Credit Ready</div>
+                        <div class="text-[10px] text-slate-500">₹15,000 pre-approved at 0.5% interest</div>
+                    </div>
+                </div>
+                <button onclick="alert('Micro-credit application submitted to SHG Lead!')" class="bg-indigo-950 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 z-50 transition-all duration-300 translate-y-20 opacity-0 max-w-sm">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <div id="toastMessage" class="text-xs font-semibold">Notification message</div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIC & INTERACTION CONTROLLER -->
+    <!-- ========================================================================= -->
+    <script>
+        // Global Application State
+        let currentRole = 'artisan'; // 'artisan' or 'buyer'
+        let currentLang = 'hi-IN';
+        let walletBalance = 3500;
+        let isRecordingVoice = false;
+        let speechRecognition = null;
+        let matchChartInstance = null;
+
+        // Initialize Web Speech API & Page Load Hooks
+        window.onload = function() {
+            initChart();
+            setupSpeechRecognition();
+        };
+
+        function setupSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+                speechRecognition = new SpeechRec();
+                speechRecognition.continuous = false;
+                speechRecognition.interimResults = false;
+
+                speechRecognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('transcriptBox').innerHTML = `<strong class="text-slate-900">Recognized:</strong> "${transcript}"`;
+                    showToast('Voice recorded successfully!', 'check');
+                    toggleSpeechRecognition(false);
+                };
+
+                speechRecognition.onerror = function() {
+                    toggleSpeechRecognition(false);
+                };
+            }
+        }
+
+        function toggleSpeechRecognition(forceState) {
+            const micBtn = document.getElementById('micRecordBtn');
+            const micIcon = document.getElementById('micIcon');
+            const statusText = document.getElementById('recordingStatusText');
+
+            if (forceState !== undefined) {
+                isRecordingVoice = !forceState;
+            }
+
+            if (!isRecordingVoice) {
+                isRecordingVoice = true;
+                micBtn.classList.add('bg-red-600', 'animate-pulse');
+                micBtn.classList.remove('bg-saffron-600');
+                micIcon.className = 'fa-solid fa-square';
+                statusText.innerText = 'Listening... Speak Now!';
+                if (speechRecognition) {
+                    try { speechRecognition.start(); } catch(e){}
+                }
+            } else {
+                isRecordingVoice = false;
+                micBtn.classList.remove('bg-red-600', 'animate-pulse');
+                micBtn.classList.add('bg-saffron-600');
+                micIcon.className = 'fa-solid fa-microphone';
+                statusText.innerText = 'Click Mic & Speak Now';
+                if (speechRecognition) {
+                    try { speechRecognition.stop(); } catch(e){}
+                }
+            }
+        }
+
+        function simulateVoiceInput(text) {
+            document.getElementById('transcriptBox').innerHTML = `<strong class="text-saffron-700">Simulated Audio Input:</strong> "${text}"`;
+            speakText(text);
+            showToast('Voice input processed!', 'microphone');
+        }
+
+        // Multilingual Text-To-Speech Synthesis
+        function speakText(text, lang) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // stop current utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang || currentLang;
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            }
+            showToast(`Playing Audio: "${text.substring(0, 30)}..."`, 'volume-high');
+        }
+
+        function triggerGlobalVoiceHelp() {
+            if (currentRole === 'artisan') {
+                speakText('हुनर शक्ति में आपका स्वागत है। आप बोलकर अपना हुनर दर्ज कर सकती हैं, या सामान की फोटो खींचकर सही दाम जान सकती हैं।');
+            } else {
+                speakText('Welcome to HunarShakti Enterprise Sourcing Hub. Post your bulk craft requirements and our AI matchmaker will connect you with top rural women SHGs.');
+            }
+        }
+
+        function switchRole(role) {
+            currentRole = role;
+            const artisanView = document.getElementById('artisanView');
+            const buyerView = document.getElementById('buyerView');
+            const btnArtisan = document.getElementById('roleBtnArtisan');
+            const btnBuyer = document.getElementById('roleBtnBuyer');
+
+            if (role === 'artisan') {
+                artisanView.classList.remove('hidden');
+                buyerView.classList.add('hidden');
+                btnArtisan.className = 'px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 bg-saffron-600 text-white shadow';
+                btnBuyer.className = 'px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-indigo-950';
+                showToast('Switched to Rural Artisan View', 'person-dress');
+            } else {
+                artisanView.classList.add('hidden');
+                buyerView.classList.remove('hidden');
+                btnBuyer.className = 'px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 bg-indigo-950 text-white shadow';
+                btnArtisan.className = 'px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 text-slate-600 hover:text-indigo-950';
+                showToast('Switched to Buyer / Enterprise View', 'store');
+                setTimeout(() => { if (matchChartInstance) matchChartInstance.update(); }, 200);
+            }
+        }
+
+        function changeArtisanLanguage(langVal) {
+            currentLang = langVal;
+            const greetings = {
+                'hi-IN': 'नमस्ते, Sunita Devi!',
+                'pa-IN': 'ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ, Sunita Devi!',
+                'bn-IN': 'নমস্কার, Sunita Devi!',
+                'mr-IN': 'नमस्कार, Sunita Devi!',
+                'ta-IN': 'வணக்கம், Sunita Devi!',
+                'en-IN': 'Welcome, Sunita Devi!'
+            };
+            document.getElementById('artisanNameGreeting').innerText = greetings[langVal] || 'नमस्ते, Sunita Devi!';
+            speakText(greetings[langVal] + ' हुनर शक्ति में आपका स्वागत है।', langVal);
+        }
+
+        // Modal Controllers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function scrollToGigs() {
+            document.getElementById('gigsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectScanSample(type) {
+            const imgEl = document.getElementById('scanPreviewImg');
+            const craftText = document.getElementById('scanDetectedCraft');
+            const priceText = document.getElementById('scanPriceRange');
+            const gradeBadge = document.getElementById('scanGradeBadge');
+
+            if (type === 'phulkari') {
+                imgEl.src = 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&q=80&w=600';
+                craftText.innerText = 'Phulkari Silk Embroidery';
+                priceText.innerText = '₹1,250 - ₹1,800';
+                gradeBadge.innerText = 'Grade A+ (96% Score)';
+            } else if (type === 'jute') {
+                imgEl.src = 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600';
+                craftText.innerText = 'Handwoven Jute Tote Bag';
+                priceText.innerText = '₹350 - ₹500';
+                gradeBadge.innerText = 'Grade A (92% Score)';
+            } else if (type === 'pottery') {
+                imgEl.src = 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=80&w=600';
+                craftText.innerText = 'Terracotta Decorative Pot';
+                priceText.innerText = '₹450 - ₹700';
+                gradeBadge.innerText = 'Grade B+ (89% Score)';
+            }
+            triggerAIScanAnimation();
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    document.getElementById('scanPreviewImg').src = evt.target.result;
+                    document.getElementById('scanDetectedCraft').innerText = 'Handcrafted Custom Product';
+                    document.getElementById('scanPriceRange').innerText = '₹800 - ₹1,200';
+                    triggerAIScanAnimation();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function triggerAIScanAnimation() {
+            const laser = document.getElementById('scanLaserLine');
+            const box = document.getElementById('scanBoundingBox');
+            laser.classList.remove('hidden');
+            box.classList.add('hidden');
+
+            setTimeout(() => {
+                laser.classList.add('hidden');
+                box.classList.remove('hidden');
+                speakText('AI स्कैन पूरा हुआ। उत्पाद की गुणवत्ता ग्रेड A और अनुमानित मूल्य 1250 रुपये है।');
+                showToast('AI Craft Audit Complete!', 'shield-check');
+            }, 2000);
+        }
+
+        function listProductOnMarketplace() {
+            closeModal('aiScanModal');
+            showToast('Product successfully listed on Enterprise Sourcing catalog!', 'shop');
+        }
+
+        function saveVoiceProfile() {
+            closeModal('voiceOnboardModal');
+            showToast('Voice skill tags saved to profile!', 'user-check');
+        }
+
+        function acceptGig(btnEl, gigTitle, payout) {
+            btnEl.innerText = 'Order Accepted!';
+            btnEl.className = 'bg-emerald-600 text-white text-sm font-bold px-5 py-2.5 rounded-2xl transition shadow';
+            speakText(`बधाई हो! आपने ${gigTitle} ऑर्डर स्वीकार कर लिया है।`);
+            showToast(`Accepted "${gigTitle}". ₹${payout} escrow locked!`, 'circle-check');
+        }
+
+        function simulateBiometricWithdrawal() {
+            const amt = parseInt(document.getElementById('withdrawAmount').value) || 2000;
+            if (amt > walletBalance) {
+                alert('Insufficient wallet balance!');
+                return;
+            }
+
+            const btn = document.getElementById('biometricBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-lg"></i> Scanning Aadhaar Biometrics...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                walletBalance -= amt;
+                document.getElementById('walletBalanceText').innerText = `₹${walletBalance.toFixed(2)}`;
+                btn.innerHTML = '<i class="fa-solid fa-check text-lg"></i> Success! Cash Released';
+                btn.className = 'w-full bg-emerald-700 text-white font-bold py-3 rounded-2xl transition text-sm';
+
+                speakText(`आधार वेरिफिकेशन सफल रहा। ${amt} रुपये आपके बैंक खाते में जमा कर दिए गए हैं।`);
+                showToast(`AEPS Cashout ₹${amt} successful!`, 'fingerprint');
+
+                setTimeout(() => {
+                    closeModal('aepsWalletModal');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-fingerprint text-lg"></i> Authenticate Biometric & Cash Out';
+                    btn.className = 'w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow';
+                }, 1500);
+            }, 2200);
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('matchChart').getContext('2d');
+            matchChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Stitch Quality', 'Capacity', 'Proximity', 'Price Fit', 'Punctuality'],
+                    datasets: [{
+                        label: 'Guru Nanak SHG',
+                        data: [98, 92, 95, 90, 96],
+                        backgroundColor: 'rgba(234, 88, 12, 0.2)',
+                        borderColor: '#ea580c',
+                        borderWidth: 2,
+                    }, {
+                        label: 'Patiala Collective',
+                        data: [90, 80, 88, 85, 92],
+                        backgroundColor: 'rgba(30, 27, 75, 0.2)',
+                        borderColor: '#1e1b4b',
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true, labels: { boxWidth: 10, font: { size: 10 } } } },
+                    scales: { r: { suggestedMin: 50, suggestedMax: 100, ticks: { display: false } } }
+                }
+            });
+        }
+
+        function handleBulkOrderSubmit(e) {
+            e.preventDefault();
+            showToast('Running AI Vector Matchmaker Engine...', 'microchip');
+            setTimeout(() => {
+                showToast('AI matched top 2 SHG Cooperatives!', 'circle-check');
+            }, 1000);
+        }
+
+        function allocateEscrowOrder(shgName, amount) {
+            showToast(`Allocated ₹${amount} Escrow to ${shgName}!`, 'lock');
+        }
+
+        let currentPipelineStep = 3;
+        function advancePipelineStep() {
+            currentPipelineStep = (currentPipelineStep % 5) + 1;
+            const badge = document.getElementById('pipelineStatusBadge');
+            const line = document.getElementById('pipelineProgressLine');
+
+            line.style.width = `${(currentPipelineStep - 1) * 25}%`;
+
+            const stepNames = [
+                'Order Placed',
+                'Raw Material Delivered',
+                'Crafting In-Progress',
+                'AI Quality Audited',
+                'AEPS Escrow Released'
+            ];
+
+            badge.innerText = `Step ${currentPipelineStep}: ${stepNames[currentPipelineStep - 1]}`;
+            showToast(`Pipeline updated: ${stepNames[currentPipelineStep - 1]}`, 'truck-fast');
+        }
+
+        function runDemoStep(stepNum) {
+            switch(stepNum) {
+                case 1:
+                    switchRole('artisan');
+                    openModal('voiceOnboardModal');
+                    setTimeout(() => simulateVoiceInput('Mujhe Phulkari silai, gota patti aur dupatta kadhai ka anubhav hai.'), 500);
+                    break;
+                case 2:
+                    switchRole('artisan');
+                    closeModal('voiceOnboardModal');
+                    openModal('aiScanModal');
+                    setTimeout(() => selectScanSample('phulkari'), 400);
+                    break;
+                case 3:
+                    switchRole('artisan');
+                    closeModal('aiScanModal');
+                    scrollToGigs();
+                    showToast('Demonstrating Voice-first Micro-Gigs Feed!', 'volume-high');
+                    break;
+                case 4:
+                    switchRole('buyer');
+                    document.getElementById('orderTitle').value = '500 Handwoven Silk Dupattas for Festive Season';
+                    showToast('Posting Enterprise Bulk Order Request...', 'building-columns');
+                    break;
+                case 5:
+                    switchRole('buyer');
+                    handleBulkOrderSubmit({ preventDefault: ()=>{} });
+                    break;
+                case 6:
+                    switchRole('artisan');
+                    openModal('aepsWalletModal');
+                    setTimeout(() => simulateBiometricWithdrawal(), 600);
+                    break;
+            }
+        }
+
+        function showToast(msg, icon) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = `fa-solid fa-${icon || 'circle-info'} text-saffron-400 text-lg`;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
